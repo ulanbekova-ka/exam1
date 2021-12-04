@@ -12,12 +12,13 @@ class MainActivity : AppCompatActivity(), OnItemClicked {
 
         supportFragmentManager.beginTransaction()
             .add(R.id.fragment_container, Fragment1())
-            .addToBackStack(null)
             .commit()
     }
 
     override fun onItemClicked(person: Person) {
         list.add(person)
+        val frg1 = Fragment1()
+        frg1.setList(list)
 
         val frg2 = Fragment2()
         val bundle = Bundle()
