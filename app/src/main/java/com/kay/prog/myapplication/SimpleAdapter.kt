@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 class SimpleAdapter(
     private val click: (pos: Int) -> Unit
 ) : RecyclerView.Adapter<SimpleAdapter.ViewHolder>() {
-    private var list = listOf<String>()
+    private var list = listOf<Person>()
 
-    fun setData(list: List<String>) {
+    fun setData(list: List<Person>) {
         this.list = list
         notifyDataSetChanged()
     }
@@ -25,7 +25,7 @@ class SimpleAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val text = list[position]
-        holder.bind(text)
+        holder.bind(text.name)
     }
 
     override fun getItemCount(): Int {

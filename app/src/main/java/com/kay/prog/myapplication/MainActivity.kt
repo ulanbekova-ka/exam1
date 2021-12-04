@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
 class MainActivity : AppCompatActivity(), OnItemClicked {
+    private val list = mutableListOf<Person>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -15,16 +16,18 @@ class MainActivity : AppCompatActivity(), OnItemClicked {
             .commit()
     }
 
-    override fun onItemClicked(item: Int) {
+    override fun onItemClicked(person: Person) {
+        list.add(person)
 
         val frg2 = Fragment2()
         val bundle = Bundle()
-        bundle.putString("name", name)
-        bundle.putString("number", number)
+        bundle.putString("name", person.name)
+        bundle.putString("number", person.number)
         frg2.arguments = bundle
 
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, frg2)
+            .addToBackStack(null)
             .commit()
     }
 }
