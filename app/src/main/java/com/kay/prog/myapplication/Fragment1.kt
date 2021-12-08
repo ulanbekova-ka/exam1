@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 class Fragment1 : Fragment(R.layout.fragment1) {
     private lateinit var listener: OnItemClicked
-    private var list = mutableListOf<Person>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -29,7 +28,7 @@ class Fragment1 : Fragment(R.layout.fragment1) {
         val number = view.findViewById<AppCompatEditText>(R.id.edit_number)
 
         val adapter = SimpleAdapter {
-            listener.onItemClicked(list[it])
+            listener.onItemClicked(it)
         }
 
         val recycler = view.findViewById<RecyclerView>(R.id.recycler_container)
@@ -37,14 +36,10 @@ class Fragment1 : Fragment(R.layout.fragment1) {
         recycler.layoutManager = LinearLayoutManager(context)
         recycler.addItemDecoration(DividerItemDecoration(context, RecyclerView.VERTICAL))
 
-        // обновлять инфу (получил list с main activity)
-        adapter.setData(list)
-
         addBtn.setOnClickListener {
             if (name.text.toString() != "" && number.text.toString() != "") {
                 val saved = Person(name.text.toString(), number.text.toString())
-                list.add(saved)
-                adapter.setData(list)
+                adapter.addPerson(saved)
                 name.setText("")
                 number.setText("")
             }
@@ -53,9 +48,5 @@ class Fragment1 : Fragment(R.layout.fragment1) {
                 Toast.makeText(context, "Заполните оба поля", Toast.LENGTH_SHORT).show()
             }
         }
-    }
-
-    fun setList(list: MutableList<Person>) {
-        this.list = list
     }
 }

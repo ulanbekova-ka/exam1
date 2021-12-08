@@ -8,12 +8,12 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 
 class SimpleAdapter(
-    private val click: (pos: Int) -> Unit
+    private val click: (person: Person) -> Unit
 ) : RecyclerView.Adapter<SimpleAdapter.ViewHolder>() {
-    private var list = listOf<Person>()
+    private var list = mutableListOf<Person>()
 
-    fun setData(list: List<Person>) {
-        this.list = list
+    fun addPerson(person: Person) {
+        list.add(person)
         notifyDataSetChanged()
     }
 
@@ -24,8 +24,8 @@ class SimpleAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val text = list[position]
-        holder.bind(text.name)
+        val person = list[position]
+        holder.bind(person)
     }
 
     override fun getItemCount(): Int {
@@ -34,15 +34,15 @@ class SimpleAdapter(
 
     class ViewHolder(
         itemView: View,
-        private val click: (pos: Int) -> Unit
+        private val click: (person: Person) -> Unit
     ): RecyclerView.ViewHolder(itemView) {
 
-        fun bind(text: String) {
+        fun bind(person: Person) {
             val txt = itemView.findViewById<AppCompatTextView>(R.id.item_txt)
-            txt.text = text
+            txt.text = person.name
             val btn = itemView.findViewById<AppCompatButton>(R.id.item_btn)
             btn.setOnClickListener {
-                click.invoke(adapterPosition)
+                click.invoke(person)
             }
         }
     }
